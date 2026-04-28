@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.setenza.magic',
   appName: 'magic',
-  webDir: 'www' // <--- On pointe sur le dossier manuel
+  webDir: 'dist/client' // <--- Changement ici pour correspondre à la sortie de Vite
 };
 
 export default config;
