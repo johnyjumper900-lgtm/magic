@@ -15,22 +15,24 @@ jobs:
         run: bun install
 
       - name: Build Web Project
-        run: bun run build
+        run: |
+          bun run build
+          # RÉPARATION : Si l'index est dans dist/client, on le remonte dans dist
+          if [ -f "dist/client/index.html" ]; then
+            cp dist/client/index.html dist/index.html
+            echo "Index.html déplacé avec succès."
+          fi
 
       - name: Sync Capacitor
         run: npx cap sync ios
 
       - name: Find and Build Xcode Project
         run: |
-          # Recherche dynamique du workspace pour éviter l'erreur code 66
           WORKSPACE_PATH=$(find ios -name "*.xcworkspace" | head -n 1)
           if [ -z "$WORKSPACE_PATH" ]; then
-            echo "Erreur : Workspace Xcode introuvable dans le dossier ios/"
+            echo "Erreur : Workspace Xcode introuvable"
             exit 1
           fi
-          echo "Workspace trouvé : $WORKSPACE_PATH"
-          
-          # Compilation du projet en mode Archive (sans signature)
           xcodebuild -workspace "$WORKSPACE_PATH" \
                      -scheme App \
                      -configuration Debug \
@@ -44,7 +46,6 @@ jobs:
 
       - name: Create IPA (Unsigned)
         run: |
-          # Extraction de l'exécutable pour créer le .ipa
           mkdir -p Payload
           cp -r App.xcarchive/Products/Applications/*.app Payload/
           zip -r Magic.ipa Payload
