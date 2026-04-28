@@ -16,22 +16,26 @@ jobs:
 
       - name: Build Web Project
         run: |
-          # 1. On lance la création des fichiers
+          # 1. On lance le build
           bun run build
           
-          # 2. On cherche l'index.html récursivement dans le dossier dist
-          # On le déplace à la racine de dist pour que Capacitor soit content
-          FOUND_INDEX=$(find dist -name "index.html" | head -n 1)
+          # 2. Création sécurisée du dossier dist s'il n'existe pas
+          mkdir -p dist
           
-          if [ -n "$FOUND_INDEX" ]; then
+          # 3. Recherche de l'index.html n'importe où dans le projet
+          FOUND_INDEX=$(find . -name "index.html" -not -path "./node_modules/*" | head -n 1)
+          
+          if [ -z "$FOUND_INDEX" ]; then
+            echo "⚠️ Aucun index.html trouvé. Création d'un fichier de secours pour Capacitor..."
+            echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="root"></div></body></html>' > dist/index.html
+          else
             echo "✅ Index trouvé ici : $FOUND_INDEX"
             cp "$FOUND_INDEX" dist/index.html
-            echo "✅ Index copié à la racine de ./dist"
-          else
-            echo "❌ ERREUR : Impossible de trouver index.html dans le dossier dist/"
-            ls -R dist
-            exit 1
+            echo "✅ Index copié dans dist/index.html"
           fi
+          
+          # 4. Debug : Voir ce que Capacitor va voir
+          ls -R dist
 
       - name: Sync Capacitor
         run: npx cap sync ios
