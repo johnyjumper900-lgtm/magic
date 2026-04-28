@@ -1,0 +1,13 @@
+{
+  "cli": {
+    "version": ">= 18.8.1"
+  },
+  "build": {
+    "preview": {
+      "ios": {
+        "simulator": true
+      }
+    },
+    "production": {}
+  }
+}

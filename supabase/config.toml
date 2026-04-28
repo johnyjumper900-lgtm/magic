@@ -1,0 +1,10 @@
+project_id = "qzrnkedtdghgfubczjlb"
+
+[functions.analyze-matches]
+verify_jwt = false
+
+[functions.analyze-ticket]
+verify_jwt = false
+
+[functions.voice-coach]
+verify_jwt = false

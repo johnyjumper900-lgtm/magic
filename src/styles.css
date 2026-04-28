@@ -1,0 +1,159 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Magic — système holographique sport / paris
+ * Tailwind v4 — variables HSL (compatibles avec le code historique
+ * qui utilise `hsl(var(--x))`).
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-glow: hsl(var(--primary-glow));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-gold: hsl(var(--gold));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-ring-offset-background: hsl(var(--background));
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+}
+
+:root {
+  --background: 230 45% 5%;
+  --foreground: 200 30% 98%;
+  --card: 230 40% 9%;
+  --card-foreground: 200 30% 98%;
+  --popover: 230 45% 7%;
+  --popover-foreground: 200 30% 98%;
+  --primary: 188 95% 56%;
+  --primary-foreground: 230 50% 6%;
+  --primary-glow: 188 100% 68%;
+  --secondary: 262 88% 66%;
+  --secondary-foreground: 200 30% 98%;
+  --muted: 230 30% 14%;
+  --muted-foreground: 215 25% 70%;
+  --accent: 310 90% 62%;
+  --accent-foreground: 200 30% 98%;
+  --destructive: 0 84% 62%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 152 76% 50%;
+  --success-foreground: 230 50% 6%;
+  --gold: 45 95% 60%;
+  --border: 220 30% 18%;
+  --input: 220 30% 16%;
+  --ring: 188 95% 56%;
+  --radius: 1.1rem;
+  --gradient-holo: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(220 90% 65%) 25%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 75%, hsl(var(--primary)) 100%);
+  --gradient-holo-soft: linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--secondary) / 0.18), hsl(var(--accent) / 0.18));
+  --gradient-iridescent: conic-gradient(from 180deg at 50% 50%, hsl(var(--primary)), hsl(220 90% 65%), hsl(var(--secondary)), hsl(var(--accent)), hsl(340 85% 65%), hsl(var(--primary)));
+  --gradient-prism: linear-gradient(90deg, hsl(var(--primary) / 0.9), hsl(var(--secondary) / 0.9), hsl(var(--accent) / 0.9));
+  --gradient-deep: radial-gradient(ellipse 80% 60% at 50% 0%, hsl(var(--secondary) / 0.22) 0%, transparent 60%), radial-gradient(ellipse 90% 50% at 100% 100%, hsl(var(--primary) / 0.18) 0%, transparent 55%), radial-gradient(ellipse 70% 40% at 0% 70%, hsl(var(--accent) / 0.14) 0%, transparent 50%);
+  --shadow-holo: 0 0 24px hsl(var(--primary) / 0.35), 0 0 60px hsl(var(--secondary) / 0.18);
+  --shadow-prism: 0 8px 40px hsl(var(--secondary) / 0.35), 0 0 24px hsl(var(--accent) / 0.25);
+  --shadow-glass: 0 12px 40px hsl(230 60% 2% / 0.6), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+  --shadow-deep: 0 20px 60px hsl(230 60% 2% / 0.7);
+  --ease-holo: cubic-bezier(0.22, 1, 0.36, 1);
+  --sidebar-background: 230 45% 5%;
+  --sidebar-foreground: 200 30% 98%;
+  --sidebar-primary: 188 95% 56%;
+  --sidebar-primary-foreground: 230 50% 6%;
+  --sidebar-accent: 230 40% 12%;
+  --sidebar-accent-foreground: 200 30% 98%;
+  --sidebar-border: 220 30% 18%;
+  --sidebar-ring: 188 95% 56%;
+}
+
+@layer base {
+  * { border-color: hsl(var(--border)); -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+  html { color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  html, body, #root { min-height: 100vh; min-height: 100dvh; }
+  body { background-color: hsl(var(--background)); color: hsl(var(--foreground)); font-family: "Space Grotesk", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; background-image: var(--gradient-deep); background-attachment: fixed; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); touch-action: manipulation; }
+  button, a { -webkit-user-select: none; user-select: none; touch-action: manipulation; }
+  input, textarea { -webkit-user-select: text; user-select: text; }
+  input, button, select, textarea { font-family: inherit; font-size: 16px; }
+  h1, h2, h3, .font-display { font-family: "Orbitron", "Space Grotesk", sans-serif; letter-spacing: 0; }
+}
+
+@layer components {
+  .glass { background: hsl(var(--card) / 0.6); backdrop-filter: blur(28px) saturate(150%); -webkit-backdrop-filter: blur(28px) saturate(150%); border: 1px solid hsl(0 0% 100% / 0.08); box-shadow: var(--shadow-glass); }
+  .glass-strong { background: hsl(var(--card) / 0.85); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); border: 1px solid hsl(0 0% 100% / 0.1); box-shadow: var(--shadow-glass); }
+  .holo-text { background: var(--gradient-holo); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 30px hsl(var(--secondary) / 0.4); animation: holo-shift 8s ease-in-out infinite; }
+  .holo-border { position: relative; border-radius: var(--radius); background: hsl(var(--card) / 0.65); }
+  .holo-border::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: var(--gradient-holo); background-size: 200% 200%; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: holo-shift 6s ease-in-out infinite; pointer-events: none; }
+  .holo-scan { position: relative; overflow: hidden; }
+  .holo-scan::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, hsl(0 0% 100% / 0.08) 45%, hsl(var(--primary-glow) / 0.18) 50%, hsl(var(--accent) / 0.12) 55%, transparent 70%); background-size: 200% 100%; animation: holo-sweep 4s ease-in-out infinite; pointer-events: none; }
+  .grid-floor { background-image: linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000, transparent); }
+}
+
+@layer utilities {
+  .bg-gradient-holo { background-image: var(--gradient-holo); background-size: 200% 200%; }
+  .bg-gradient-holo-soft { background-image: var(--gradient-holo-soft); }
+  .bg-gradient-prism { background-image: var(--gradient-prism); }
+  .bg-iridescent { background-image: var(--gradient-iridescent); }
+  .shadow-holo { box-shadow: var(--shadow-holo); }
+  .shadow-prism { box-shadow: var(--shadow-prism); }
+  .shadow-deep { box-shadow: var(--shadow-deep); }
+  .text-glow-cyan { text-shadow: 0 0 12px hsl(var(--primary) / 0.7), 0 0 28px hsl(var(--primary) / 0.35); }
+  .text-glow-violet { text-shadow: 0 0 12px hsl(var(--secondary) / 0.7), 0 0 28px hsl(var(--secondary) / 0.35); }
+  .text-glow-magenta { text-shadow: 0 0 12px hsl(var(--accent) / 0.7), 0 0 28px hsl(var(--accent) / 0.35); }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .scrollbar-none { scrollbar-width: none; }
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+  .safe-top { padding-top: max(env(safe-area-inset-top), 0.5rem); }
+  .tap { transition: transform 0.18s var(--ease-holo); }
+  .tap:active { transform: scale(0.96); }
+}
+
+@keyframes holo-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes holo-sweep { 0% { background-position: 200% 0; } 60%, 100% { background-position: -100% 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.animate-float { animation: float 5s ease-in-out infinite; }
+@keyframes pulse-holo { 0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.35), 0 0 40px hsl(var(--secondary) / 0.15); } 50% { box-shadow: 0 0 36px hsl(var(--primary) / 0.55), 0 0 70px hsl(var(--secondary) / 0.3); } }
+.animate-pulse-holo { animation: pulse-holo 3s ease-in-out infinite; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+@keyframes voice-pulse { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.4); opacity: 0; } }
+.animate-voice-pulse { animation: voice-pulse 1.6s ease-out infinite; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.shimmer-overlay { background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.08), hsl(var(--primary-glow) / 0.12), transparent); background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.animate-fade-in-up { animation: fade-in-up 0.32s var(--ease-holo) both; }
+@keyframes stadium-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-stadium-orbit { animation: stadium-orbit 18s linear infinite; }
+@keyframes scan { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(220px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+@media (max-width: 430px) { .iphone-tight { padding-left: 0.75rem; padding-right: 0.75rem; } }
