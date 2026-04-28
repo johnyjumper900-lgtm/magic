@@ -16,11 +16,21 @@ jobs:
 
       - name: Build Web Project
         run: |
+          # 1. On lance la création des fichiers
           bun run build
-          # RÉPARATION : Si l'index est dans dist/client, on le remonte dans dist
-          if [ -f "dist/client/index.html" ]; then
-            cp dist/client/index.html dist/index.html
-            echo "Index.html déplacé avec succès."
+          
+          # 2. On cherche l'index.html récursivement dans le dossier dist
+          # On le déplace à la racine de dist pour que Capacitor soit content
+          FOUND_INDEX=$(find dist -name "index.html" | head -n 1)
+          
+          if [ -n "$FOUND_INDEX" ]; then
+            echo "✅ Index trouvé ici : $FOUND_INDEX"
+            cp "$FOUND_INDEX" dist/index.html
+            echo "✅ Index copié à la racine de ./dist"
+          else
+            echo "❌ ERREUR : Impossible de trouver index.html dans le dossier dist/"
+            ls -R dist
+            exit 1
           fi
 
       - name: Sync Capacitor
