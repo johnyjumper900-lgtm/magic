@@ -1,17 +1,10 @@
-name: Build iOS IPA
-on: [push]
-jobs:
-  build:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-      - run: bun install
-      - run: bun run build
-      - run: npx cap sync ios
-      - name: Build Xcode Project
+- name: Build Xcode Project
         run: |
-          xcodebuild -workspace ios/App/App.xcworkspace \
+          # On cherche où est le fichier .xcworkspace exactement
+          WORKSPACE_PATH=$(find ios -name "*.xcworkspace" | head -n 1)
+          echo "Workspace trouvé : $WORKSPACE_PATH"
+          
+          xcodebuild -workspace "$WORKSPACE_PATH" \
                      -scheme App \
                      -configuration Debug \
                      -sdk iphoneos \
@@ -19,13 +12,3 @@ jobs:
                      -archivePath App.xcarchive \
                      archive \
                      CODE_SIGNING_ALLOWED=NO
-      - name: Create IPA (Unsigned)
-        run: |
-          mkdir Payload
-          cp -r App.xcarchive/Products/Applications/App.app Payload/
-          zip -r Magic.ipa Payload
-      - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Magic-IPA
-          path: Magic.ipa
