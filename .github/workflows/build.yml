@@ -1,9 +1,36 @@
-- name: Build Xcode Project
+name: Build iOS IPA
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Build Web Project
+        run: bun run build
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Find and Build Xcode Project
         run: |
-          # On cherche où est le fichier .xcworkspace exactement
+          # Recherche dynamique du workspace pour éviter l'erreur code 66
           WORKSPACE_PATH=$(find ios -name "*.xcworkspace" | head -n 1)
+          if [ -z "$WORKSPACE_PATH" ]; then
+            echo "Erreur : Workspace Xcode introuvable dans le dossier ios/"
+            exit 1
+          fi
           echo "Workspace trouvé : $WORKSPACE_PATH"
           
+          # Compilation du projet en mode Archive (sans signature)
           xcodebuild -workspace "$WORKSPACE_PATH" \
                      -scheme App \
                      -configuration Debug \
@@ -11,4 +38,19 @@
                      -destination 'generic/platform=iOS' \
                      -archivePath App.xcarchive \
                      archive \
-                     CODE_SIGNING_ALLOWED=NO
+                     CODE_SIGNING_ALLOWED=NO \
+                     CODE_SIGNING_REQUIRED=NO \
+                     CODE_SIGNING_IDENTITY=""
+
+      - name: Create IPA (Unsigned)
+        run: |
+          # Extraction de l'exécutable pour créer le .ipa
+          mkdir -p Payload
+          cp -r App.xcarchive/Products/Applications/*.app Payload/
+          zip -r Magic.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Magic-IPA
+          path: Magic.ipa
